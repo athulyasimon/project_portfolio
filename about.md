@@ -6,13 +6,12 @@ image: Athulya.jpg
 ---
 
 ## Overview
-Lorem ipsum dolor sit amet, purto tota in vel, exerci discere apeirian has in. Nec noster iracundia eu, utroque facilis ad has. Alii argumentum no his, omnis iusto scripta vim in, ipsum ridens mel at. Has homero phaedrum no, ea autem affert facilis usu, has possim meliore perpetua id. Errem iisque mea ex, option ocurreret no est. Sea facer ullamcorper ne, cu dictas discere repudiandae sea.
+Athulya Simon is a recent graduate from Northwestern University with a B.S. in Biomedical Engineering. During her studies, she gained practical experience creating a Rotating Treat Dispenser for autism research and building an MRI Phantom for Cardiovascular Calibrations.
 
-His nemore audiam consequat ad, no augue choro assueverit mei. Zril offendit tincidunt ne quo. At commodo integre alienum sea, cu vocent fuisset suscipit nam. Eum ex tation omnesque adversarium, mutat autem putant te nam. Id vix facilis complectitur, vis vitae vivendo euripidis ea, fugit eirmod an vix.
+As a member of the inaugural MSR cohort, Athulya continues to strengthen her problem solving and programming skills while gaining familiarity with cutting edge robotic applications. Her interests lie where the biomedical field intersects with robotics and artificial intelligence, in subfields such as prosthetics and surgical robotics. She is currently learning about the intricacies of artificial limbs and targeted muscle reinnervation, applying machine learning to computer vision and data analysis, and robotic manipulation with embedded systems.
 
-Ad case nemore equidem mea. Duo te iuvaret appetere appellantur, sint scaevola usu cu. Eum ne aeque ridens prompta. At legendos vulputate eos, pro illum iuvaret cu, ludus vituperata usu no.
+Outside of engineering, Athulya has interest in both music and sports. She was a member of the Northwestern University Marching Band throughout her undergraduate career and is still a member of Basketball Band. She also organizes intramural sports teams with the MSR cohort.
 
-Mel magna discere in. Mea ea dicit homero perfecto. Eam nulla facete scribentur in. Vide volutpat laboramus est cu, usu cu impetus dignissim. Ex pro decore impetus. Ius nihil iisque deterruisset an, ex sanctus verterem his. Doming prompta insolens est ut.
 
 ### Research interests
 * Interest 1
