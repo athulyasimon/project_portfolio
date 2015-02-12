@@ -14,6 +14,6 @@ Outside of engineering, Athulya has interest in both music and sports. She was a
 
 
 ### Research interests
-* Interest 1
-* Interest 2
-* Interest 3
+* Rehabilitation/Prosthetics
+* Bio-inspired Technology
+* Humanoid Robots
