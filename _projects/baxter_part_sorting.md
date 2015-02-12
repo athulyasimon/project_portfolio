@@ -8,8 +8,6 @@ image: BaxterPartSorting.png
 ## Overview
 Baxter - Part Sorting by Weight
 
-
-### 
 The goal of this project was to correctly detect and sort cylinders based on weight using a kinect and Baxter.
 
 * Used PCL for cylinder segmentation
