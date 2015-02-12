@@ -5,7 +5,6 @@ url: index.html
 image: http://unsplash.it/400?random
 ---
 
-## Quick Spiel
 Feel free to contact me by email
 
 * Phone: (708) 513-1145
