@@ -2,10 +2,10 @@
 layout: contact
 path: /contact
 url: index.html
-image: http://unsplash.it/400?random
+image: wildcat.jpg
 ---
 
-Feel free to contact me by email
+Feel free to contact me (email preferred)
 
 * Phone: (708) 513-1145
 * Email: AthulyaSimon2014@u.northwestern.edu
