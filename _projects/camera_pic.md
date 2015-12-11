@@ -40,12 +40,13 @@ Getting images properly from the camera entirely depends on timing. The followin
 
 Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
 
-![VGA Frame Timing](https://raw.github.com/athulyasimon/project_portfolio/blob/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.png)
-![Horizontal Timing](https://raw.github.com/athulyasimon/project_portfolio/blob/gh-pages/public/images/ov7670_project/Horizontal%20Timing.png)
+![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/blob/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.png)
+![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.png)
 
 
 ####Steps to Capture Image into Camera's Frame Buffer Memory
 1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67) - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
+ 
 ```
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
@@ -69,7 +70,9 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	IFS1bits.CNIF = 0; // clear the interrupt flag
 }
 ```
+
 2. [Reset Write Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L345-L350) - Pin E9 (defined as WRST) is used to reset the write pointer so that the image starts saving from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
+
 ```
 void reset_write_pointer(){
 	//Reset Write Pointer to 0 which is the beginning of the frame
@@ -80,6 +83,7 @@ void reset_write_pointer(){
 ```
 
 3. [FIFO Write Enable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L352-L355) - Pin E8 (defined as WR) is set high to enable the writing of the image to ram
+
 ```
 void FIFO_write_enable(){
 	//Set FIFO write enable to active (high) so that image can be written to ram
@@ -135,10 +139,7 @@ void rckInitialize(){
 ####Frame Resolution
 
 The OV7670 is capable of outputting images with various frame resolutions. 
-* 
-*
-*
-*
+
 
 ####Color Format
 
