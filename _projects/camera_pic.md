@@ -22,26 +22,15 @@ There are many available versions of the OV7670 camera. Some come with an additi
 
 ####PIN Explanation
 
- | |
----|---
-VCC - 3.3V Input power supply|GND - Ground Input
-SIOC - Used for I2C, connects to SCL pin on microcontroller|SIOD - Used for I2C, connects to SDA pin on microcontroller
-VSYNC - Output that is high while a new frame is being output |HREF - Output that is high while a new row is being output
-D7-D0 - Image data is output on these pins one byte at a time|
-RST - Input to reset the camera|PWDN - Input to put the camera into power down mode
-STR - Camera strobe output that can be used to turn on an LED light while the camera takes an image|RCK - Input for clock pulse, each clock cycle corresponds to a new byte
-WR - Set high to enable the writing of data to the camera's frame buffer memory|OE(Output Enable) - Set high for valid camera output from the D7-D0 pins
-WRST(Write reset) - Input pin that resets the frame buffer memory's write pointer|RRST(Read reset) - Input pin that resets the frame buffer memory's read pointer
-
-Replace with table image
+![Pin Explanation](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Pin%20explanation.jpg)
 
 ###Timing Diagrams
 Getting images properly from the camera entirely depends on timing. The following diagrams were taken from [Beginning Arduino ov7670 Camera Development](http://www.amazon.com/dp/B010Y37XQG/?tag=stackoverfl08-20). Although the book is written for interfacing the camera with an Arduino microcontroller, it was very helpful in explaining the timing diagrams and giving an outline for the code. 
 
 Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
 
-![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.png)
-![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.png)
+![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.jpg)
+![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.jpg)
 
 
 ###Steps to Capture Image into Camera's Frame Buffer Memory
@@ -174,11 +163,11 @@ The available color formats for this camera are
 
 YUV/YCrCb stores brightness value, and blue and red intensity values. The information is outputed as YUYV so every 4 bytes of data corresponds to 2 pixel values, where the U and V information is shared between 2 Ys. YUV can be converted to RGB with a simple formula. 
 
-![YUV image]()
+![YUV image](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv.jpg)
 
 RGB stores information on red, green, and blue components. The information can either be outputted as RGB 888, RGB565, or RGB555. RGB888 is just 3 bytes for every pixel, while the other two compress the information into two bytes per pixel 
 
-![RGB image]()
+![RGB image](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/rgb.jpg)
 
 Bayer Raw is the raw sensor data of either red, green, or blue depending on the color filter at that pixel location.
 
