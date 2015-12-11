@@ -198,8 +198,9 @@ Changing the color format follows the steps as changing the resolution. The main
 
 
 ##Helpful Links
-*[Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
-*[OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
-*[PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
+
+* [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
+* [OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
+* [PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
 
 
