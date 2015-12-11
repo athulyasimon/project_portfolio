@@ -40,7 +40,7 @@ Getting images properly from the camera entirely depends on timing. The followin
 
 Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
 
-![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/blob/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.png)
+![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.png)
 ![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.png)
 
 
