@@ -36,7 +36,7 @@ Here is a simple description of what is shown below. VSync will go high at the s
 ###Steps to Capture Image into Camera's Frame Buffer Memory
 *1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67)* - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
 
-~~~ 
+~~~ c
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
 				  // must read both to allow continued functioning
@@ -62,7 +62,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 
 *2. [Reset Write Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L345-L350)* - Pin E9 (defined as WRST) is used to reset the write pointer so that the image starts saving from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
-~~~ 
+~~~ c
 void reset_write_pointer(){
 	//Reset Write Pointer to 0 which is the beginning of the frame
 	//default is high, set pin low to reset
@@ -73,7 +73,7 @@ void reset_write_pointer(){
 
 *3. [FIFO Write Enable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L352-L355)* - Pin E8 (defined as WR) is set high to enable the writing of the image to ram
 
-~~~ 
+~~~ c
 void FIFO_write_enable(){
 	//Set FIFO write enable to active (high) so that image can be written to ram
 	LATESET = WR;	
@@ -82,13 +82,13 @@ void FIFO_write_enable(){
 
 *4. [Identify when VSync is high again](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L71)* - The change notification pin just identifies when VSync is high. In order to determine if this is the first trigger or the second trigger I have a read_state variable that will switch back and forth. The memory can only store one image at a time so once the image is read into memory the change notification pin is turned off. Once the image has been displayed the read state variable and the change notification pin can be reset to capture a new image. 
 
-~~~
+~~~ c
 	read_state = !read_state; //first VSync is beginning of frame 
 ~~~
 
 *5. [FIFO Write Disable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L357-L360)* - Pin E8 (defined as WR) is set low to enable the writing of the image to ram
 
-~~~
+~~~ c
 void FIFO_write_disable(){
 	//Set FIFO write enable to inactive (low) so that image cannot be written to ram
 	LATECLR = WR;	
@@ -99,7 +99,7 @@ void FIFO_write_disable(){
 
 *1. [Reset Read Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L404-L409)* - Pin F0 (defined as RRST) is used to reset the read pointer so that the image starts being output from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
-~~~
+~~~ c
 void reset_read_pointer(){
 	//Set the FIFO read buffer pointer to the start of the frame
 	//default is high, set pin low to reset
@@ -110,7 +110,7 @@ void reset_read_pointer(){
 
 *2. [Enable Output](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L411-L414)* - Pin F1 (defined as OE) is set low to enable the output of valid data on the D7-D0 pins.
 
-~~~
+~~~ c
 void FIFO_output_enable(){
 	//Set FIFO output enable to active (low) so that image can be read
 	LATFCLR = OE;	
@@ -119,7 +119,7 @@ void FIFO_output_enable(){
 
 *3. [Provide Clock Signal](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L421-L441)* - A PWM signal is generated to provide a clock signal for the camera. A new byte is presented onto the D7-D0 pins (which can all be read at once by the PIC32) for every pulse of the clock. 
 
-~~~
+~~~ c
 void rckInitialize(){
 	T3CONbits.TCKPS = 0; // Timer 3 pre­scaler N = 1 (1:1), thus it ticks at 80 Mhz (PBCLK/N)
 	PR3 = FULL_DUTY - 1; // This makes run at 80 Mhz / (N * (PR3+1)) == 10 MHz
