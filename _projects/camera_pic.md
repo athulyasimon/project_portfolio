@@ -14,7 +14,7 @@ The PIC32 was previously used in our Mechatronics classes and was sufficient for
 ##Camera
 The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and is capable of taking 640x480 resolution pictures at up to 30 frames per second. 
 
-####Camera Version
+###Camera Version
 
 There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version 
 
@@ -35,7 +35,7 @@ WRST(Write reset) - Input pin that resets the frame buffer memory's write pointe
 
 Replace with table image
 
-####Timing Diagrams
+###Timing Diagrams
 Getting images properly from the camera entirely depends on timing. The following diagrams were taken from [Beginning Arduino ov7670 Camera Development](http://www.amazon.com/dp/B010Y37XQG/?tag=stackoverfl08-20). Although the book is written for interfacing the camera with an Arduino microcontroller, it was very helpful in explaining the timing diagrams and giving an outline for the code. 
 
 Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
@@ -44,10 +44,10 @@ Here is a simple description of what is shown below. VSync will go high at the s
 ![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.png)
 
 
-####Steps to Capture Image into Camera's Frame Buffer Memory
-1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67) - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
+###Steps to Capture Image into Camera's Frame Buffer Memory
+1 . [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67) - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
 
-~~~
+~~~ 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
 				  // must read both to allow continued functioning
@@ -69,11 +69,11 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	
 	IFS1bits.CNIF = 0; // clear the interrupt flag
 }
-~~~
+~~~ 
 
-2. [Reset Write Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L345-L350) - Pin E9 (defined as WRST) is used to reset the write pointer so that the image starts saving from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
+2 . [Reset Write Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L345-L350) - Pin E9 (defined as WRST) is used to reset the write pointer so that the image starts saving from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
-~~~
+~~~ 
 void reset_write_pointer(){
 	//Reset Write Pointer to 0 which is the beginning of the frame
 	//default is high, set pin low to reset
@@ -82,22 +82,22 @@ void reset_write_pointer(){
 }
 ~~~
 
-3. [FIFO Write Enable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L352-L355) - Pin E8 (defined as WR) is set high to enable the writing of the image to ram
+3 . [FIFO Write Enable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L352-L355) - Pin E8 (defined as WR) is set high to enable the writing of the image to ram
 
-~~~
+~~~ 
 void FIFO_write_enable(){
 	//Set FIFO write enable to active (high) so that image can be written to ram
 	LATESET = WR;	
 }
 ~~~
 
-4. [Identify when VSYNC is high again](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L71) - The change notification pin just identifies when VSync is high. In order to determine if this is the first trigger or the second trigger I have a read_state variable that will switch back and forth. The memory can only store one image at a time so once the image is read into memory the change notification pin is turned off. Once the image has been displayed the read state variable and the change notification pin can be reset to capture a new image. 
+4 . [Identify when VSync is high again](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L71) - The change notification pin just identifies when VSync is high. In order to determine if this is the first trigger or the second trigger I have a read_state variable that will switch back and forth. The memory can only store one image at a time so once the image is read into memory the change notification pin is turned off. Once the image has been displayed the read state variable and the change notification pin can be reset to capture a new image. 
 
 ~~~
 	read_state = !read_state; //first VSync is beginning of frame 
 ~~~
 
-5. [FIFO Write Disable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L357-L360) - Pin E8 (defined as WR) is set low to enable the writing of the image to ram
+5 . [FIFO Write Disable](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L357-L360) - Pin E8 (defined as WR) is set low to enable the writing of the image to ram
 
 ~~~
 void FIFO_write_disable(){
@@ -106,8 +106,8 @@ void FIFO_write_disable(){
 }
 ~~~
  
-####Steps to Retrieve the Image from the Camera's Frame Buffer Memory
-1. [Reset Read Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L404-L409) - Pin F0 (defined as RRST) is used to reset the read pointer so that the image starts being output from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
+###Steps to Retrieve the Image from the Camera's Frame Buffer Memory
+1 . [Reset Read Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L404-L409) - Pin F0 (defined as RRST) is used to reset the read pointer so that the image starts being output from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
 ~~~
 void reset_read_pointer(){
@@ -118,7 +118,7 @@ void reset_read_pointer(){
 }
 ~~~
 
-2. [Enable Output](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L411-L414) - Pin F1 (defined as OE) is set low to enable the output of valid data on the D7-D0 pins.
+2 . [Enable Output](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L411-L414) - Pin F1 (defined as OE) is set low to enable the output of valid data on the D7-D0 pins.
 
 ~~~
 void FIFO_output_enable(){
@@ -127,7 +127,7 @@ void FIFO_output_enable(){
 }
 ~~~
 
-3. [Provide Clock Signal]() - A PWM signal is generated to provide a clock signal for the camera. A new byte is presented onto the D7-D0 pins (which can all be read at once by the PIC32) for every pulse of the clock. 
+3 . [Provide Clock Signal]() - A PWM signal is generated to provide a clock signal for the camera. A new byte is presented onto the D7-D0 pins (which can all be read at once by the PIC32) for every pulse of the clock. 
 
 ~~~
 void rckInitialize(){
@@ -143,13 +143,49 @@ void rckInitialize(){
 }
 ~~~
 
-####Camera Output Manipulation
+###Camera Output Manipulation
+
 ####Frame Resolution
 
-The OV7670 is capable of outputting images with various frame resolutions. 
+The OV7670 is capable of outputting images with the following frame resolutions:
 
+* VGA (640x480)
+* QVGA (320x240)
+* QQVGA (160x120)
+* CIF (352x288)
+* QCIF (176x144)
+
+These resolutions can be adjusted by setting new values in the Register Set (Table 5 in the [Datasheet](http://www.voti.nl/docs/OV7670.pdf)) The three registers that need to be updated to change the resolution are COM3, COM7, and COM14. Bit 3 in COM3 and COM14 enabling scaling, while COM7[5:3] are used to pick the specific size. Here is the communication protocol for changing the value in one register.
+
+~~~
+     i2c_master_start();
+     i2c_master_send(0x42); //Write Address
+     i2c_master_send(0x0c); //Register Address for COM3
+     i2c_master_send(0x00 | 0b00001000); //Default value OR bit you wish to change - this prevents accidentally rewriting over original settings
+     i2c_master_stop();
+~~~
 
 ####Color Format
+The available color formats for this camera are
+
+* YUV/YCrCb
+* RGB 
+* Bayer Raw 
+
+YUV/YCrCb stores brightness value, and blue and red intensity values. The information is outputed as YUYV so every 4 bytes of data corresponds to 2 pixel values, where the U and V information is shared between 2 Ys. YUV can be converted to RGB with a simple formula. 
+
+![YUV image]()
+
+RGB stores information on red, green, and blue components. The information can either be outputted as RGB 888, RGB565, or RGB555. RGB888 is just 3 bytes for every pixel, while the other two compress the information into two bytes per pixel 
+
+![RGB image]()
+
+Bayer Raw is the raw sensor data of either red, green, or blue depending on the color filter at that pixel location.
+
+Changing the color format follows the steps as changing the resolution. The main register that matters when changing color format is COM7 (Bits 2 and 0), but there are many others to control the gains for each color channel.  
+
+
+
 
 
 ####Test Patterns
@@ -165,6 +201,5 @@ The OV7670 is capable of outputting images with various frame resolutions.
 *[Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
 *[OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
 *[PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
-
 
 
