@@ -46,7 +46,7 @@ Here is a simple description of what is shown below. VSync will go high at the s
 
 ####Steps to Capture Image into Camera's Frame Buffer Memory
 1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67) - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
-~~~ c
+~~~ 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
 				  // must read both to allow continued functioning
@@ -86,7 +86,7 @@ void FIFO_write_enable(){
 	//Set FIFO write enable to active (high) so that image can be written to ram
 	LATESET = WR;	
 }
-~~~c
+~~~
 
 4. [Identify when VSYNC is high again](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L71) - The change notification pin just identifies when VSync is high. In order to determine if this is the first trigger or the second trigger I have a read_state variable that will switch back and forth. The memory can only store one image at a time so once the image is read into memory the change notification pin is turned off. Once the image has been displayed the read state variable and the change notification pin can be reset to capture a new image. 
 ~~~c
@@ -151,9 +151,9 @@ The OV7670 is capable of outputting images with various frame resolutions.
 
 
 ##Helpful Links
-[My Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
-[OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
-[PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
+*[Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
+*[OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
+*[PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
 
 
 
