@@ -46,7 +46,7 @@ Here is a simple description of what is shown below. VSync will go high at the s
 
 ####Steps to Capture Image into Camera's Frame Buffer Memory
 1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67) - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
-~~~c
+~~~ c
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
 				  // must read both to allow continued functioning
