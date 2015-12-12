@@ -2,7 +2,7 @@
 layout: contact
 path: /contact
 url: index.html
-image: wildcat.jpg
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/wildcat.jpg
 ---
 
 Feel free to contact me (email preferred)
