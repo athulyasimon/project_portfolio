@@ -1,6 +1,6 @@
 ---
 layout: project
-title: Baxter Part Sorting
+title: Baxter Block Stacking
 date: March 23, 2015
 image: BaxterBlockStacking.jpg
 ---
