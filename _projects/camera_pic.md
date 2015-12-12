@@ -164,11 +164,11 @@ The available color formats for this camera are
 
 YUV/YCrCb stores brightness value, and blue and red intensity values. The information is outputed as YUYV so every 4 bytes of data corresponds to 2 pixel values, where the U and V information is shared between 2 Ys. YUV can be converted to RGB with a simple formula. 
 
-![YUV image](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv.jpg)
+<center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv.jpg" alt="YUV pixel output format"></center>
 
 RGB stores information on red, green, and blue components. The information can either be outputted as RGB 888, RGB565, or RGB555. RGB888 is just 3 bytes for every pixel, while the other two compress the information into two bytes per pixel 
 
-![RGB image](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/rgb.jpg)
+<center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/rgb.jpg" alt="RGB pixel output format"></center>
 
 Bayer Raw is the raw sensor data of either red, green, or blue depending on the color filter at that pixel location.
 
@@ -183,12 +183,14 @@ In order to test the camera there are a few registers that can be set to produce
 ####Reading the image into Matlab
 The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion and storing the RGB values into an NxNx3 array. 
 
-![YUV to RGB Conversion](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg)
-
+<center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg" alt="YUV to RGB conversion"></center>
 
 ##Helpful Links
 
 * [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32)
 * [OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
 * [PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
+* [Beginning Arduino ov7670 Camera Development](http://www.amazon.com/dp/B010Y37XQG/?tag=stackoverfl08-20)
+* [Embedded Programmer-Hacking OV7670](http://embeddedprogrammer.blogspot.com/2012/07/hacking-ov7670-camera-module-sccb-cheat.html) 
+* [Color Conversion](http://www.equasys.de/colorconversion.html)
 
