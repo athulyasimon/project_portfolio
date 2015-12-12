@@ -1,6 +1,6 @@
 ---
 layout: project
-title: OV7670 Camera w/ PIC32
+title: Camera w/ PIC32
 date: December 12, 2014
 image: ov7670_project/cam_pic.png
 ---
