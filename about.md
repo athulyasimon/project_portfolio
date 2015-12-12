@@ -2,7 +2,7 @@
 layout: about
 path: /about
 url: index.html
-image: Athulya.png
+image: Athulya2.jpg
 ---
 
 ## Overview
