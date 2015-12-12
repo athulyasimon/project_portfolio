@@ -181,12 +181,14 @@ In order to test the camera there are a few registers that can be set to produce
 ##Matlab
 
 ####Reading the image into Matlab
-The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB] conversion and storing the RGB values into an NxNx3 array. 
+The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion and storing the RGB values into an NxNx3 array. 
+
+![YUV to RGB Conversion](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg)
 
 
 ##Helpful Links
 
-* [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32).
+* [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32)
 * [OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
 * [PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
 
