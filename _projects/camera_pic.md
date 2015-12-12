@@ -18,8 +18,7 @@ The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and i
 
 There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version 
 
-<img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png" align="middle">
-
+<center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png" alt="pin diagram"></center>
 
 ####PIN Explanation
 
