@@ -18,7 +18,8 @@ The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and i
 
 There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version 
 
-![](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png)
+<img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png" align="middle">
+
 
 ####PIN Explanation
 
@@ -191,5 +192,4 @@ The image data can easily be read from the PIC32 to Matlab through serial commun
 * [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32)
 * [OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
 * [PIC32MX795F512L Datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/61156G.pdf)
-
 
