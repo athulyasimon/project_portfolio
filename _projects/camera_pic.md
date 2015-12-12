@@ -1,6 +1,6 @@
 ---
 layout: project
-title: Camera w/ PIC32
+title: Camera with PIC32
 date: December 12, 2014
 image: ov7670_project/cam_pic.png
 ---
@@ -174,17 +174,14 @@ Bayer Raw is the raw sensor data of either red, green, or blue depending on the 
 
 Changing the color format follows the steps as changing the resolution. The main register that matters when changing color format is COM7 (Bits 2 and 0), but there are many others to control the gains for each color channel.  
 
-
-
-
-
 ####Test Patterns
+In order to test the camera there are a few registers that can be set to produce some test images. The first step is to enable the color bar which is Bit 1 from COM7. After that Bit 7 on both the SCALING\_XSC and SCALING\_YSC are used to decide between the 8-bar color bar, fade to gray color bar, or no test image. Bits 6 through 0 on both of those registers can be used to control the horizontal and vertical scale factor of the test images. 
 
 
 ##Matlab
-####uart/Reading in image
 
-####yuv to rgb conversion
+####Reading the image into Matlab
+The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB] conversion and storing the RGB values into an NxNx3 array. 
 
 
 ##Helpful Links
