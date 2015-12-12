@@ -26,14 +26,14 @@ image: ov7670_project/cam_pic.png
 The goal of this project was to interface the OV7670 camera with the PIC32MX795F512L microcontroller. 
 
 ##Microcontroller <a name="Microcontroller"></a>
-The PIC32 was previously used in our Mechatronics classes and was sufficient for this project. The PIC32 is housed by a [NU32 development board](http://hades.mech.northwestern.edu/index.php/NU32:_Introduction_to_the_PIC32). This board also has a serial-to-USB converter which is useful for transmitting data from the camera to my computer. The camera communicates using SCCB (Serial Camera Control Bus). SCCB protocol is similar to I2C protocol and therefore I2C communication is used between the microcontroller and the camera. An I2C library was provided by Nick Marchuk for use in our Mechatronics class. The library as well as other downloads helpful for setting up the microcontroller with a computer can be found [here](http://hades.mech.northwestern.edu/index.php/NU32_Software) in the Full Book Source Code download. 
+The PIC32 was previously used in our Mechatronics classes and was convenient for this project. The PIC32 is housed by an [NU32 development board](http://hades.mech.northwestern.edu/index.php/NU32:_Introduction_to_the_PIC32). This board also has a serial-to-USB converter which is useful for transmitting data from the camera to my computer. The camera communicates using SCCB (Serial Camera Control Bus); however, SCCB protocol is similar to I2C protocol and therefore I2C communication is used between the microcontroller and the camera. An I2C library was provided by Nick Marchuk for use in our Mechatronics class. The library as well as other downloads helpful for setting up the microcontroller with a computer can be found [here](http://hades.mech.northwestern.edu/index.php/NU32_Software) in the Full Book Source Code download. 
 
 ##Camera <a name="Camera"></a>
 The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and is capable of taking 640x480 resolution pictures at up to 30 frames per second. 
 
 ###Camera Version <a name="Camera Version"></a>
 
-There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version 
+There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version. The most commonly found (and documented) version of the OV7670 camera does not come with the FIFO chip.  
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png" alt="pin diagram"></center>
 
@@ -44,14 +44,14 @@ There are many available versions of the OV7670 camera. Some come with an additi
 ###Timing Diagrams <a name="Timing Diagrams"></a>
 Getting images properly from the camera entirely depends on timing. The following diagrams were taken from [Beginning Arduino ov7670 Camera Development](http://www.amazon.com/dp/B010Y37XQG/?tag=stackoverfl08-20). Although the book is written for interfacing the camera with an Arduino microcontroller, it was very helpful in explaining the timing diagrams and giving an outline for the code. 
 
-Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
+Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c). 
 
 ![VGA Frame Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/VGA%20Frame%20Timing.jpg)
 ![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.jpg)
 
 
 ###Steps to Capture Image into Camera's Frame Buffer Memory <a name="Image Capture"></a>
-*1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67)* - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
+*1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67)* - A change notification pin was used to determine when VSync goes high signaling the beginning of a new frame. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
 
 ~~~ cpp
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
@@ -134,7 +134,7 @@ void FIFO_output_enable(){
 }
 ~~~
 
-*3. [Provide Clock Signal](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L421-L441)* - A PWM signal is generated to provide a clock signal for the camera. A new byte is presented onto the D7-D0 pins (which can all be read at once by the PIC32) for every pulse of the clock. 
+*3. [Provide Clock Signal](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L421-L441)* - A PWM signal is generated to provide a clock signal for the camera. A new byte is presented onto the D7-D0 pins for every pulse of the clock. The D7-D0 pins on the camera are connected to the B7-B0 pins on the PIC32 and can all be read at once by just reading PORTB. 
 
 ~~~ c
 void rckInitialize(){
@@ -162,7 +162,7 @@ The OV7670 is capable of outputting images with the following frame resolutions:
 * CIF (352x288)
 * QCIF (176x144)
 
-These resolutions can be adjusted by setting new values in the Register Set (Table 5 in the [Datasheet](http://www.voti.nl/docs/OV7670.pdf)) The three registers that need to be updated to change the resolution are COM3, COM7, and COM14. Bit 3 in COM3 and COM14 enabling scaling, while COM7[5:3] are used to pick the specific size. Here is the communication protocol for changing the value in one register.
+These resolutions can be adjusted by setting new values in the Register Set (Table 5 in the [Datasheet](http://www.voti.nl/docs/OV7670.pdf)) The three registers that need to be updated to change the resolution are COM3, COM7, and COM14. Bit 3 in both COM3 and COM14 enable scaling, while bits 5-3 of COM7 are used to pick the specific size. Here is the communication protocol for changing the value in one register.
 
 ~~~
      i2c_master_start();
@@ -179,7 +179,7 @@ The available color formats for this camera are
 * RGB 
 * Bayer Raw 
 
-YUV/YCrCb stores brightness value, and blue and red intensity values. The information is outputed as YUYV so every 4 bytes of data corresponds to 2 pixel values, where the U and V information is shared between 2 Ys. YUV can be converted to RGB with a simple formula. 
+YUV/YCrCb stores brightness value, and red and blue intensity values. The information is outputed as YUYV so every 4 bytes of data corresponds to 2 pixel values, where the U and V information is shared between 2 Ys. YUV can be converted to RGB with a simple formula shown towards the end of this page. 
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv.jpg" alt="YUV pixel output format"></center>
 
@@ -198,7 +198,7 @@ In order to test the camera there are a few registers that can be set to produce
 ##Matlab <a name="Matlab"></a>
 
 ####Reading the image into Matlab
-The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion and storing the RGB values into an NxNx3 array. 
+The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. Displaying just the Y values should produce a black and white image. A simple [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion can be used to see the color image. Each R,G, and B value is then stored individually into an NxNx3 array which can easily be displayed with image(NxNx3 array). 
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg" alt="YUV to RGB conversion"></center>
 
