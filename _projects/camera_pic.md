@@ -5,26 +5,43 @@ date: December 12, 2014
 image: ov7670_project/cam_pic.png
 ---
 
-## Overview
+#### Table of Contents ####
+* [Project Overview](#Project Overview) 
+* [Microcontroller](#Microcontroller) 
+* [Camera](#Camera)
+ * [Camera Version](#Camera Version)
+ * [Pin Explanation](#Pin Explanation)
+ * [Timing Diagrams](#Timing Diagrams)
+ * [Image Capture](#Image Capture)
+ * [Image Retrieval](#Image Retrieval)
+ * [Camera Registers](#Camera Registers)
+    * [Frame Resolution](#Frame Resolution)
+    * [Color Format](#Color Format)
+    * [Test Patterns](#Test Patterns) 
+* [Matlab](#Matlab) 
+* [Helpful Links](#Helpful Links)
+
+
+## Project Overview <a name="Project Overview"></a>
 The goal of this project was to interface the OV7670 camera with the PIC32MX795F512L microcontroller. 
 
-##Microcontroller
+##Microcontroller <a name="Microcontroller"></a>
 The PIC32 was previously used in our Mechatronics classes and was sufficient for this project. The PIC32 is housed by a [NU32 development board](http://hades.mech.northwestern.edu/index.php/NU32:_Introduction_to_the_PIC32). This board also has a serial-to-USB converter which is useful for transmitting data from the camera to my computer. The camera communicates using SCCB (Serial Camera Control Bus). SCCB protocol is similar to I2C protocol and therefore I2C communication is used between the microcontroller and the camera. An I2C library was provided by Nick Marchuk for use in our Mechatronics class. The library as well as other downloads helpful for setting up the microcontroller with a computer can be found [here](http://hades.mech.northwestern.edu/index.php/NU32_Software) in the Full Book Source Code download. 
 
-##Camera
+##Camera <a name="Camera"></a>
 The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and is capable of taking 640x480 resolution pictures at up to 30 frames per second. 
 
-###Camera Version
+###Camera Version <a name="Camera Version"></a>
 
 There are many available versions of the OV7670 camera. Some come with an additional AL422 FIFO chip which is helpful for image storage. With the FIFO chip the image can be stored on the chip and then read out later. Otherwise the image needs to be read out at the same time as it is being captured. There are two different versions available of the OV7670 cameras with the AL422 FIFO chip. The version used in this project is the 22 pin version 
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/fifo_ov7670_med.png" alt="pin diagram"></center>
 
-####PIN Explanation
+####Pin Explanation <a name="Pin Explanation"></a>
 
 ![Pin Explanation](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Pin%20explanation.jpg)
 
-###Timing Diagrams
+###Timing Diagrams <a name="Timing Diagrams"></a>
 Getting images properly from the camera entirely depends on timing. The following diagrams were taken from [Beginning Arduino ov7670 Camera Development](http://www.amazon.com/dp/B010Y37XQG/?tag=stackoverfl08-20). Although the book is written for interfacing the camera with an Arduino microcontroller, it was very helpful in explaining the timing diagrams and giving an outline for the code. 
 
 Here is a simple description of what is shown below. VSync will go high at the start of a new frame, then HREF will go high for the start of every row and the pixels for each row will be output from the D7-D0 pins every time PCLK is high. A second high VSync signals the end of a new frame. Parts of the code are explained in the next section and the entire code can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/master/main.c).
@@ -33,7 +50,7 @@ Here is a simple description of what is shown below. VSync will go high at the s
 ![Horizontal Timing](https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/Horizontal%20Timing.jpg)
 
 
-###Steps to Capture Image into Camera's Frame Buffer Memory
+###Steps to Capture Image into Camera's Frame Buffer Memory <a name="Image Capture"></a>
 *1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67)* - I used a change notification pin to trigger when VSync goes high. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
 
 ~~~ cpp
@@ -95,7 +112,7 @@ void FIFO_write_disable(){
 }
 ~~~
  
-###Steps to Retrieve the Image from the Camera's Frame Buffer Memory
+###Steps to Retrieve the Image from the Camera's Frame Buffer Memory <a name="Image Retrieval"></a>
 
 *1. [Reset Read Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L404-L409)* - Pin F0 (defined as RRST) is used to reset the read pointer so that the image starts being output from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
@@ -133,9 +150,9 @@ void rckInitialize(){
 }
 ~~~
 
-###Camera Output Manipulation
+###Camera Registers <a name="Camera Registers"></a>
 
-####Frame Resolution
+####Frame Resolution <a name="Frame Resolution"></a>
 
 The OV7670 is capable of outputting images with the following frame resolutions:
 
@@ -155,7 +172,7 @@ These resolutions can be adjusted by setting new values in the Register Set (Tab
      i2c_master_stop();
 ~~~
 
-####Color Format
+####Color Format <a name="Color Format"></a>
 The available color formats for this camera are
 
 * YUV/YCrCb
@@ -174,18 +191,18 @@ Bayer Raw is the raw sensor data of either red, green, or blue depending on the 
 
 Changing the color format follows the steps as changing the resolution. The main register that matters when changing color format is COM7 (Bits 2 and 0), but there are many others to control the gains for each color channel.  
 
-####Test Patterns
+####Test Patterns <a name="Test Patterns"></a>
 In order to test the camera there are a few registers that can be set to produce some test images. The first step is to enable the color bar which is Bit 1 from COM7. After that Bit 7 on both the SCALING\_XSC and SCALING\_YSC are used to decide between the 8-bar color bar, fade to gray color bar, or no test image. Bits 6 through 0 on both of those registers can be used to control the horizontal and vertical scale factor of the test images. 
 
 
-##Matlab
+##Matlab <a name="Matlab"></a>
 
 ####Reading the image into Matlab
 The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. The first figure that appears is just of the Y values, which should produce a black and white image. The second figure that appears is produced by applying the [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion and storing the RGB values into an NxNx3 array. 
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg" alt="YUV to RGB conversion"></center>
 
-##Helpful Links
+##Helpful Links <a name="Helpful Links"></a>
 
 * [Project Code](https://github.com/athulyasimon/ov7670_with_PIC32)
 * [OV7670 Datasheet](http://www.voti.nl/docs/OV7670.pdf)
