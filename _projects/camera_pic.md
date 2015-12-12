@@ -2,7 +2,7 @@
 layout: project
 title: Interfacing a Camera and Microcontroller
 date: December 12, 2014
-image: msr-student-template-favicon.png
+image: ov7670_project/cam_pic.png
 ---
 
 ## Overview
