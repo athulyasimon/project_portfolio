@@ -14,7 +14,7 @@ The goal of this project was to design, build, and program a car to follow a lin
 * An Android Phone camera was used to locate the line
 * The phone had to communicate with the PIC steer the car
 
-<video src="https://www.dropbox.com/home/Videos?preview=car_line_following.mp4" width="320" height="200" controls preload></video>
+Click [here](https://www.dropbox.com/home/Videos?preview=car_line_following.mp4) to see a video of this project.
 
 More information about this and other projects for my Advanced Mechatronics class can be found here on my [GitHub page](https://github.com/athulyasimon/ME433)
 
