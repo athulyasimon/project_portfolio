@@ -10,6 +10,7 @@ image_path:         /public/images
 
 # Build settings
 markdown:           kramdown
+  use_coderay: true
 permalink:          pretty
 
 # Collection definitions and settings
