@@ -53,7 +53,7 @@ Here is a simple description of what is shown below. VSync will go high at the s
 ###Steps to Capture Image into Camera's Frame Buffer Memory <a name="Image Capture"></a>
 *1. [Identify when VSync is high](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L67)* - A change notification pin was used to determine when VSync goes high signaling the beginning of a new frame. The initialization of this pin can be found [here](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L336-L343)
 
-~~~ cpp
+{% highlight c %}
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	newF = PORTF; // since pins on port F are being monitored by CN,
 				  // must read both to allow continued functioning
@@ -75,11 +75,11 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) VSyncInterrupt(void) { // INT step 1
 	
 	IFS1bits.CNIF = 0; // clear the interrupt flag
 }
-~~~ 
+{% endhighlight %}
 
 *2. [Reset Write Pointer](https://github.com/athulyasimon/ov7670_with_PIC32/blob/5ca605fe3d894c1da259ed6ebd53389eb1c3dc2d/main.c#L345-L350)* - Pin E9 (defined as WRST) is used to reset the write pointer so that the image starts saving from the beginning of the frame. The pointer is set low to reset then returned to its original high signal. 
 
-~~~ c
+~~~
 void reset_write_pointer(){
 	//Reset Write Pointer to 0 which is the beginning of the frame
 	//default is high, set pin low to reset
