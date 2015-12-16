@@ -18,15 +18,16 @@ image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages
        * [Frame Resolution](#Frame Resolution)
        * [Color Format](#Color Format)
        * [Test Patterns](#Test Patterns) 
-* [Matlab](#Matlab) 
+* [MATLAB](#Matlab) 
+* [Conclusion and Future Work](#Conclusion)
 * [Helpful Links](#Helpful Links)
 
 
 ## Project Overview <a name="Project Overview"></a>
-The goal of this project was to interface the OV7670 camera with the PIC32MX795F512L microcontroller. 
+The goal of this project was to interface the OV7670 camera with the PIC32MX795F512L microcontroller. The camera was chosen based on research while the PIC32 was chosen based on its frequent use at Northwestern.
 
 ##Microcontroller <a name="Microcontroller"></a>
-The PIC32 was previously used in our Mechatronics classes and was convenient for this project. The PIC32 is housed by an [NU32 development board](http://hades.mech.northwestern.edu/index.php/NU32:_Introduction_to_the_PIC32). This board also has a serial-to-USB converter which is useful for transmitting data from the camera to my computer. The camera communicates using SCCB (Serial Camera Control Bus); however, SCCB protocol is similar to I2C protocol and therefore I2C communication is used between the microcontroller and the camera. An I2C library was provided by Nick Marchuk for use in our Mechatronics class. The library as well as other downloads helpful for setting up the microcontroller with a computer can be found [here](http://hades.mech.northwestern.edu/index.php/NU32_Software) in the Full Book Source Code download. 
+The PIC32 was previously used in our Mechatronics classes and was chosen for this project due to its wide use at Northwestern. An Arduino would have been easier; however, Prof. Peshkin wanted a lower level microcontroller. Also, the code to interface the Arduino with the OV7670 can easily be found on the internet. The PIC32 is housed by an [NU32 development board](http://hades.mech.northwestern.edu/index.php/NU32:_Introduction_to_the_PIC32). This board also has a serial-to-USB converter which is useful for transmitting data from the camera to my computer. The camera communicates using SCCB (Serial Camera Control Bus); however, SCCB protocol is similar to I2C protocol and therefore I2C communication is used between the microcontroller and the camera. An I2C library was provided by Nick Marchuk for use in our Mechatronics class. The library as well as other downloads helpful for setting up the microcontroller with a computer can be found [here](http://hades.mech.northwestern.edu/index.php/NU32_Software) in the Full Book Source Code download. 
 
 ##Camera <a name="Camera"></a>
 The OV7670 with FIFO is a cheap CMOS camera. It requires a 3V power supply and is capable of taking 640x480 resolution pictures at up to 30 frames per second. 
@@ -195,12 +196,17 @@ Changing the color format follows the steps as changing the resolution. The main
 In order to test the camera there are a few registers that can be set to produce some test images. The first step is to enable the color bar which is Bit 1 from COM7. After that Bit 7 on both the SCALING\_XSC and SCALING\_YSC are used to decide between the 8-bar color bar, fade to gray color bar, or no test image. Bits 6 through 0 on both of those registers can be used to control the horizontal and vertical scale factor of the test images. 
 
 
-##Matlab <a name="Matlab"></a>
+##MATLAB <a name="Matlab"></a>
 
-####Reading the image into Matlab
-The image data can easily be read from the PIC32 to Matlab through serial communication. From Matlab the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into Matlab, then I seperate the data into the Y values and the U/V values. Displaying just the Y values should produce a black and white image. A simple [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion can be used to see the color image. Each R,G, and B value is then stored individually into an NxNx3 array which can easily be displayed with image(NxNx3 array). A YUV image of [0 128 0 128 0 128 ...] is properly converted into an all black image. The camera often sends plain black images and I have not yet captured a real image from the camera.  
+####Reading the image into MATLAB
+The image data can easily be read from the PIC32 to MATLAB through serial communication. From MATLAB the user has the options of capturing a new frame, dispaying that frame, or toggling between the test patterns. With displaying the frame, the data is first read into MATLAB, then I seperate the data into the Y values and the U/V values. Displaying just the Y values should produce a black and white image. A simple [YUV/YCbCr to RGB](http://www.equasys.de/colorconversion.html) conversion can be used to see the color image. Each R,G, and B value is then stored individually into an NxNx3 array which can easily be displayed with image(NxNx3 array). A YUV image of [0 128 0 128 0 128 ...] is properly converted into an all black image. 
 
 <center><img src="https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/yuv2rgb.jpg" alt="YUV to RGB conversion"></center>
+
+
+##Conclusion and Future Work <a name="Conclusion"></a>
+
+At the moment the camera often sends plain black images, but does not capture real images. The timing of the provided clock signal, HREF, and reading the bytes has not yet been perfectly aligned to capture an image. An oscilloscope or a logic analyzer can be used to see the timing at such high speeds and debug the timing issue. Once images can be captured the process will need to be automated to stream video. This setup can then be used for many various purposes such as navigation through line following or phototaxis.
 
 ##Helpful Links <a name="Helpful Links"></a>
 
