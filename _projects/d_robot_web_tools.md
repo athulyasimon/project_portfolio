@@ -2,7 +2,7 @@
 layout: project
 title: Robot Web Tools
 date: September 23, 2014
-image: turtlesim.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/turtlesim.png
 ---
 
 ## Overview

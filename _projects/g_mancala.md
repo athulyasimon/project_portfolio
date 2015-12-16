@@ -2,7 +2,7 @@
 layout: project
 title: Artificial Intelligence
 date: Spring Quarter 2015
-image: mancala.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/mancala.png
 ---
 
 ##Overview

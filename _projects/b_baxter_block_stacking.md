@@ -2,7 +2,7 @@
 layout: project
 title: Baxter Block Stacking
 date: March 23, 2015
-image: BaxterBlockStacking.jpg
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/BaxterBlockStacking.jpg
 ---
 
 ## Overview

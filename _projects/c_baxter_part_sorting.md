@@ -2,7 +2,7 @@
 layout: project
 title: Baxter Part Sorting
 date: November 2, 2014
-image: BaxterPartSorting.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/BaxterPartSorting.png
 ---
 
 ## Overview

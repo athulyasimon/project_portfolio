@@ -2,7 +2,7 @@
 layout: project
 title: Camera with PIC32
 date: December 12, 2014
-image: ov7670_project/cam_pic.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/ov7670_project/cam_pic.png
 ---
 
 #### Table of Contents ####

@@ -2,7 +2,7 @@
 layout: project
 title: Line Following Car
 date: June 9, 2015
-image: line_car.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/line_car.png
 ---
 
 ## Overview

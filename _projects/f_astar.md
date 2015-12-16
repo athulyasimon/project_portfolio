@@ -2,7 +2,7 @@
 layout: project
 title: A* Implementation
 date: December 10, 2014
-image: Astar.png
+image: https://raw.githubusercontent.com/athulyasimon/project_portfolio/gh-pages/public/images/Astar.png
 ---
 
 ## Overview
