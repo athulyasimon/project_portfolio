@@ -1,6 +1,6 @@
 ---
 layout: project
-title: A * Implementation
+title: A* Implementation
 date: December 10, 2014
 image: Astar.png
 ---

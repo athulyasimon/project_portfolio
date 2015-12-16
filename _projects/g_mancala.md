@@ -8,7 +8,7 @@ image: mancala.png
 ##Overview
 Here are some assignments from our Intro to Artificial Intelligence class. While the code to display the game boards was provided for us, we wrote the implementation of the algorithms ourselves. Unfortunately the code cannot be provided as assignments are recycled for future classes.  
 
-### Mancala Player (April 18)
+### Mancala Player (April 20)
 
 * Implements the alpha-beta pruning search algorithm
 * Evaluates the strength of the move through a game board evaluator
@@ -27,7 +27,7 @@ involved in the largest number of constraints with unassigned variables
    * LCV (least constraining value) Heuristic – choose the value that rules out the
 fewest choices for other unassigned variables
 
-### Sentiment Analysis
+### Sentiment Analysis (May 24)
 
 Training data
 
@@ -49,7 +49,7 @@ Evaluation
 * Classifier was evaluated based on precision, recall, and f-measure
 
 
-## Sketch Recognition
+## Sketch Recognition (Jun 5)
 
 * Implement the Viterbi algorithm to determine whether or not an individual pen stroke is a part of a drawing or a letter
 * Uses 10 fold cross validation to evaluate the classifier
