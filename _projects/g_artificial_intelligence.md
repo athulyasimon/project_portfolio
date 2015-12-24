@@ -49,7 +49,7 @@ Evaluation
 * Classifier was evaluated based on precision, recall, and f-measure
 
 
-## Sketch Recognition (Jun 5)
+### Sketch Recognition (Jun 5)
 
 * Implement the Viterbi algorithm to determine whether or not an individual pen stroke is a part of a drawing or a letter
 * Uses 10 fold cross validation to evaluate the classifier
