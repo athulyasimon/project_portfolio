@@ -12,5 +12,7 @@ The goal of this project was to distinguish between images of a few letters of t
 
 <iframe src="https://www.youtube.com/watch?v=a2peO_Kktho" width="500" height="283" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
+[![Sign Language Detection](http://img.youtube.com/vi/a2peO_Kktho/0.jpg)](http://www.youtube.com/watch?v=a2peO_Kktho "ASL Report")
+
 <iframe src="https://player.vimeo.com/video/149185663" width="500" height="283" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
